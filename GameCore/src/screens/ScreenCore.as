@@ -67,7 +67,7 @@ package screens
 		public function hide():void {
 			if(isVisible != false){
 				beforHide();
-				TweenLite.to(container, 2, {x:-screenW, y:0, ease:Bounce.easeOut});
+				TweenLite.to(container, 0.5, {x:-screenW, y:0, ease:Bounce.easeOut});
 				isVisible = false;
 			}
 		}

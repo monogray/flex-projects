@@ -106,6 +106,7 @@ package game_impl
 			drawCavwas.graphics.lineStyle(2, 0x00ff00);
 			drawCavwas.graphics.moveTo(20, 250-voiceValMedian);
 			drawCavwas.graphics.lineTo(voiceVal.length*2 + 20, 250-voiceValMedian);
+			
 			//if(voiceCount > voiceCountMax){
 				//this.nextStep();
 				//voiceCount = 0;

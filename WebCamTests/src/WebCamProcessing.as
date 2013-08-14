@@ -171,6 +171,10 @@ package
 			vid.x = 300;
 		}
 		
+		public function getCam():WebCam {
+			return cam;
+		}
+		
 		public function getMicrophoneActivityLevelIsActive():Number {
 			return cam.getMicrophoneActivityLevelIsActive();
 		}

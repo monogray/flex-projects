@@ -30,8 +30,8 @@ package game_impl
 		private var voiceClass		:Class;
 		private var voice			:Bitmap = new voiceClass();
 		
-		[Embed(source = "../../assets/screen_1/movie.flv", mimeType = "application/octet-stream")]
-		public var bytes:Class;
+		[Embed(source = "../../assets/flv/movie.flv", mimeType = "application/octet-stream")]
+		public var movieBytes:Class;
 		
 		private var video1				:Video = new Video(760, 760);
 		private var ns					:NetStream
@@ -77,25 +77,24 @@ package game_impl
 		public override function beforShow():void {
 			if(Globals.webcam.getCurrentState() == -1)
 				Globals.webcam.setCurrentState(0);
-			//ns.play(null);
-			ns.togglePause();
-			
 			isPlayed = true;
+			ns.togglePause();
 		}
 		
 		public override function beforHide():void {
-			ns.togglePause();
-			ns.seek(0);
-			
-			isPlayed = false;
 			voiceVideo = 0;
 			voiceVideoTo = 0;
+			voiceCount = 0;
+			
+			isPlayed = false;
+			ns.seek(0);
+			ns.togglePause();
 		}
 		
 		public override function loop():void {
 			drawCavwas.graphics.clear();
 			drawCavwas.graphics.beginFill(0xffffff, 0.5);
-			drawCavwas.graphics.drawCircle(400, 350, voiceVideoTo*(390/voiceCountMax));
+			drawCavwas.graphics.drawCircle(400, 350, voiceCount*(390/voiceCountMax));
 			drawCavwas.graphics.drawCircle(400, 350, ns.time*20*(390/voiceCountMax));
 			drawCavwas.graphics.endFill();
 			
@@ -124,10 +123,8 @@ package game_impl
 				}
 			}
 			
-			if(voiceCount > voiceCountMax){
+			if(ns.time*20 > 220){
 				this.nextStep();
-				voiceCount = 0;
-				drawCavwas.graphics.clear();
 			}
 		}
 		
@@ -140,7 +137,7 @@ package game_impl
 			
 			var metaSniffer:Object = new Object();  
 			nc.client = metaSniffer;
-			metaSniffer.onMetaData=getMeta;
+			//metaSniffer.onMetaData = getMeta;
 			nc.connect(null);
 		}
 		
@@ -172,7 +169,7 @@ package game_impl
 			// trace("metaData");
 		}
 		
-		private function getMeta (mdata:Object):void {
+		private function getMeta(mdata:Object):void {
 			video1.width = mdata.width / 2;
 			video1.height = mdata.height / 2;
 		};
@@ -183,11 +180,11 @@ package game_impl
 				ns = new NetStream(e.target as NetConnection);
 				
 				ns.client = {};
-				var file:ByteArray = new bytes();
+				var file:ByteArray = new movieBytes();
 				
 				ns.play(null);
-				ns.pause();
-				//ns.togglePause();
+				//ns.pause();
+				ns.togglePause();
 				
 				ns.appendBytes(file);
 				video1.attachNetStream(ns);

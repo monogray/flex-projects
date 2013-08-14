@@ -110,14 +110,14 @@ package webcam
 			mic.addEventListener(StatusEvent.STATUS, this.onMicStatus);
 			mic.addEventListener(ActivityEvent.ACTIVITY, this.onMicActivity);
 			
-			mic.gain = 80;
-			mic.rate = 44;
-			
+			//mic.gain = 80;
+			//mic.rate = 44;
 			//mic.noiseSuppressionLevel(10);
-			mic.setUseEchoSuppression(true);
+			//mic.setUseEchoSuppression(true);
+			//mic.setLoopBack(true); 
+			//mic.setSilenceLevel(0);
+			setupMicrophoneSettings(70, 44, true, true, 5, -1);
 			
-			mic.setLoopBack(true); 
-			mic.setSilenceLevel(0);
 			/*info = "Sound input device name: " + mic.name + '\n'; 
 			info += "Gain: " + mic.gain + '\n'; 
 			info += "Rate: " + mic.rate + " kHz" + '\n'; 
@@ -125,6 +125,14 @@ package webcam
 			info += "Silence level: " + mic.silenceLevel + '\n'; 
 			info += "Silence timeout: " + mic.silenceTimeout + '\n'; 
 			info += "Echo suppression: " + mic.useEchoSuppression + '\n';*/
+		}
+		
+		public function setupMicrophoneSettings(_gain:int, _rate:int, _useEchoSuppression:Boolean, _loopBack:Boolean, _silenceLevel:Number, _timeout:int=-1):void {
+			mic.gain = _gain;
+			mic.rate = _rate;
+			mic.setUseEchoSuppression(_useEchoSuppression);
+			mic.setLoopBack(_loopBack);
+			mic.setSilenceLevel(_silenceLevel, _timeout);
 		}
 		
 		private function onMicStatus(event:StatusEvent):void { 

@@ -52,17 +52,17 @@ package
 			addEventListener(Event.ENTER_FRAME, loop);
 			
 			label = new TextField();
-			label.text = "Test";
+			label.text = "No Errors";
 			this.addChild(label);
 		}
 		
 		private function createScreens():void {
 			var screen0:Screen_0 = new Screen_0();
 			game.pushScreen(screen0);
-			var screen1:Screen_1 = new Screen_1();
-			game.pushScreen(screen1);
 			var screen1_2:Screen_1_2 = new Screen_1_2();
 			game.pushScreen(screen1_2);
+			var screen1:Screen_1 = new Screen_1();
+			game.pushScreen(screen1);
 			var screen3:Screen_3 = new Screen_3();
 			game.pushScreen(screen3);
 			var screen2:Screen_2 = new Screen_2();
