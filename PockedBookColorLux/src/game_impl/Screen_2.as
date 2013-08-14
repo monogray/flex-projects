@@ -42,8 +42,8 @@ package game_impl
 			this.setStepsCount(0);
 			container.addChild(bg);
 			
-			bt_1.addBitmap(bt1).setPosition(25, 680).addEventListener("CLICK", clickPrev);
-			bt_2.addBitmap(bt2).setPosition(680, 680).addEventListener("CLICK", clickNext);
+			bt_1.addBitmap(bt1).setPosition(25, 650).addEventListener("CLICK", clickPrev);
+			bt_2.addBitmap(bt2).setPosition(640, 650).addEventListener("CLICK", clickNext);
 			container.addChild(bt_1.getContainer());
 			container.addChild(bt_2.getContainer());
 			

@@ -2,10 +2,10 @@ package webcam
 {
 	import flash.display.*;
 	import flash.events.*;
-	import flash.geom.Matrix;
+	import flash.geom.*;
 	import flash.media.*;
-	import flash.utils.ByteArray;
 	import flash.net.*;
+	import flash.utils.*;
 	
 	import images.JPGEncoder;
 	
@@ -86,13 +86,13 @@ package webcam
 		public function sendImage(_url:String):void {
 			imgBA = jpgEncoder.encode( capture.bitmapData );
 			
-			var sendHeader:URLRequestHeader = new URLRequestHeader("Content-type","application/octet-stream");
+			var sendHeader:URLRequestHeader = new URLRequestHeader("Content-type","application/octet-stream");	// Вынести!!!!!!!!!!!!
 			var sendReq:URLRequest = new URLRequest(_url);
 			sendReq.requestHeaders.push(sendHeader);
 			sendReq.method = URLRequestMethod.POST;
 			sendReq.data = imgBA;
 			
-			var sendLoader:URLLoader;
+			var sendLoader:URLLoader;				// Вынести!!!!!!!!!!!!
 			sendLoader = new URLLoader();
 			//sendLoader.addEventListener(Event.COMPLETE, imageSentHandler);
 			sendLoader.load(sendReq);
@@ -110,11 +110,14 @@ package webcam
 			mic.addEventListener(StatusEvent.STATUS, this.onMicStatus);
 			mic.addEventListener(ActivityEvent.ACTIVITY, this.onMicActivity);
 			
-			mic.gain = 60; 
-			mic.rate = 11; 
-			mic.setUseEchoSuppression(true); 
+			mic.gain = 80;
+			mic.rate = 44;
+			
+			//mic.noiseSuppressionLevel(10);
+			mic.setUseEchoSuppression(true);
+			
 			mic.setLoopBack(true); 
-			mic.setSilenceLevel(5, 1000);
+			mic.setSilenceLevel(0);
 			/*info = "Sound input device name: " + mic.name + '\n'; 
 			info += "Gain: " + mic.gain + '\n'; 
 			info += "Rate: " + mic.rate + " kHz" + '\n'; 
@@ -124,8 +127,7 @@ package webcam
 			info += "Echo suppression: " + mic.useEchoSuppression + '\n';*/
 		}
 		
-		private function onMicStatus(event:StatusEvent):void 
-		{ 
+		private function onMicStatus(event:StatusEvent):void { 
 			if (event.code == "Microphone.Unmuted") {
 				trace("Microphone access was allowed."); 
 			}else if (event.code == "Microphone.Muted") {

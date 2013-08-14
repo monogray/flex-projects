@@ -175,6 +175,10 @@ package
 			return cam.getMicrophoneActivityLevelIsActive();
 		}
 		
+		public function getMicrophoneActivityLevel():Number {
+			return cam.getMicrophoneActivityLevel();
+		}
+		
 		public function getCapture():Bitmap {
 			return cam.getCapture();
 		}

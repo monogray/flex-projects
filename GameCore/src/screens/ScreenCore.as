@@ -66,12 +66,14 @@ package screens
 		
 		public function hide():void {
 			if(isVisible != false){
+				beforHide();
 				TweenLite.to(container, 2, {x:-screenW, y:0, ease:Bounce.easeOut});
 				isVisible = false;
 			}
 		}
 		
 		public function hideImmediately():void {
+			//beforHide();
 			TweenLite.to(container, 0, {x:-screenW, y:0});
 			isVisible = false;
 		}

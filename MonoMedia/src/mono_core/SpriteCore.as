@@ -11,7 +11,8 @@ package mono_core
 		private var format			:TextFormat = new TextFormat();
 		private var labelText		:String = "";
 		
-		public function SpriteCore() {
+		public function SpriteCore()
+		{
 			configureLabel();
 		}
 		
@@ -43,17 +44,9 @@ package mono_core
 			addChild(label);
 		}
 		
-		public function setPos(_obj:Sprite, _x:int, _y:int):void {
+		public function setPos(_obj:Object, _x:int, _y:int):void {
 			_obj.x = _x;
 			_obj.y = _y;
-		}
-		
-		public function addValueToVectorPool_number(_vector:Vector.<Number>, _value:Number):void {
-			var _len:int = _vector.length - 1;
-			for(var i:int; i < _len; i++){
-				_vector[i] = _vector[i+1];
-			}
-			_vector[_len] = _value;
 		}
 	}
 }

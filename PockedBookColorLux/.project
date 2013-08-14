@@ -18,7 +18,22 @@
 		<link>
 			<name>[source path] GameCore-src</name>
 			<type>2</type>
-			<location>F:/Development v2/flex-projects/GameCore/src</location>
+			<location>D:/Development/flex-projects/GameCore/src</location>
+		</link>
+		<link>
+			<name>[source path] Libs-src</name>
+			<type>2</type>
+			<location>D:/Development/flex-projects/Libs/src</location>
+		</link>
+		<link>
+			<name>[source path] MonoMedia-src</name>
+			<type>2</type>
+			<location>D:/Development/flex-projects/MonoMedia/src</location>
+		</link>
+		<link>
+			<name>[source path] WebCamTests-src</name>
+			<type>2</type>
+			<location>D:/Development/flex-projects/WebCamTests/src</location>
 		</link>
 		<link>
 			<name>[source path] Libs-src</name>

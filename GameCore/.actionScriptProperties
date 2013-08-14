@@ -2,8 +2,8 @@
 <actionScriptProperties analytics="false" mainApplicationPath="GameCore.as" projectUUID="a8792879-205b-494b-9c70-de00a29e2c9c" version="11">
   <compiler additionalCompilerArguments="-locale en_US" advancedTelemetry="false" autoRSLOrdering="true" copyDependentFiles="true" fteInMXComponents="false" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin-debug" removeUnusedRSL="true" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" useFlashSDK="true" verifyDigests="true" warn="true">
     <compilerSourcePath>
-      <compilerSourcePathEntry kind="1" linkType="1" path="F:/Development v2/flex-projects/MonoMedia/src"/>
-      <compilerSourcePathEntry kind="1" linkType="1" path="F:/Development v2/flex-projects/Libs/src"/>
+      <compilerSourcePathEntry kind="1" linkType="1" path="D:/Development/flex-projects/MonoMedia/src"/>
+      <compilerSourcePathEntry kind="1" linkType="1" path="D:/Development/flex-projects/Libs/src"/>
     </compilerSourcePath>
     <libraryPath defaultLinkType="0">
       <libraryPathEntry kind="4" path="">
