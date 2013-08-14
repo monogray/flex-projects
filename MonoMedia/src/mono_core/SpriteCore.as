@@ -48,5 +48,21 @@ package mono_core
 			_obj.x = _x;
 			_obj.y = _y;
 		}
+		
+		public function putValueInVector_number(_vector:Vector.<Number>, _val:Number):void {
+			var _len:int = _vector.length-1;
+			for(var i:int = 0; i < _len; i++){
+				_vector[i] = _vector[i+1];
+			}
+			_vector[_len] = _val;
+		}
+		
+		public function getMedianFromVector_number(_vector:Vector.<Number>):Number {
+			var _median:Number = 0;
+			for(var i:int = 0; i < _vector.length; i++){
+				_median += _vector[i];
+			}
+			return _median/_vector.length;
+		}
 	}
 }

@@ -30,11 +30,12 @@ package game_impl
 		private var voiceClass		:Class;
 		private var voice			:Bitmap = new voiceClass();
 		
-		[Embed(source = "../../assets/flv/movie.flv", mimeType = "application/octet-stream")]
-		public var movieBytes:Class;
+		/*[Embed(source = "../../assets/flv/movie.flv", mimeType = "application/octet-stream")]
+		public var movieBytes:Class;*/
 		
 		private var video1				:Video = new Video(760, 760);
-		private var ns					:NetStream
+		private var ns			
+		:NetStream
 		
 		private var voiceCount			:int = 0;
 		private var voiceCountMax		:int = 1000;
@@ -55,7 +56,7 @@ package game_impl
 			this.setStepsCount(0);
 			container.addChild(bg);
 			
-			openVideo();
+			openVideo2();
 			
 			bt_1.addBitmap(bt1).setPosition(25, 650).addEventListener("CLICK", clickPrev);
 			bt_2.addBitmap(bt2).setPosition(640, 650).addEventListener("CLICK", clickNext);
@@ -78,6 +79,7 @@ package game_impl
 			if(Globals.webcam.getCurrentState() == -1)
 				Globals.webcam.setCurrentState(0);
 			isPlayed = true;
+			
 			ns.togglePause();
 		}
 		
@@ -87,8 +89,9 @@ package game_impl
 			voiceCount = 0;
 			
 			isPlayed = false;
-			ns.seek(0);
+			
 			ns.togglePause();
+			ns.seek(0);
 		}
 		
 		public override function loop():void {
@@ -128,20 +131,9 @@ package game_impl
 			}
 		}
 		
-		protected function openVideo():void {
-			container.addChild(video1);
-			
-			var nc:NetConnection = new NetConnection();
-			nc.addEventListener(NetStatusEvent.NET_STATUS , onConnect);
-			nc.addEventListener(AsyncErrorEvent.ASYNC_ERROR , trace);
-			
-			var metaSniffer:Object = new Object();  
-			nc.client = metaSniffer;
-			//metaSniffer.onMetaData = getMeta;
-			nc.connect(null);
-		}
 		
-		/*protected function openVideo2():void {
+		
+		protected function openVideo2():void {
 			container.addChild(video1);
 			
 			var nc:NetConnection = new NetConnection();
@@ -160,13 +152,26 @@ package game_impl
 			//ns.play("http://pocked-book-ar.eugene.dev.ok/movie.flv");
 			
 			ns.togglePause();
-		}*/
+		}
 		
 		protected function cuePointHandler(infoObject:Object):void {
 			// trace("cuePoint");
 		}
 		protected function metaDataHandler(infoObject:Object):void {
 			// trace("metaData");
+		}
+		
+		/*protected function openVideo():void {
+			container.addChild(video1);
+			
+			var nc:NetConnection = new NetConnection();
+			nc.addEventListener(NetStatusEvent.NET_STATUS , onConnect);
+			nc.addEventListener(AsyncErrorEvent.ASYNC_ERROR , trace);
+			
+			var metaSniffer:Object = new Object();  
+			nc.client = metaSniffer;
+			//metaSniffer.onMetaData = getMeta;
+			nc.connect(null);
 		}
 		
 		private function getMeta(mdata:Object):void {
@@ -190,6 +195,6 @@ package game_impl
 				video1.attachNetStream(ns);
 			}
 			
-		}
+		}*/
 	}
 }
