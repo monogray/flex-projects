@@ -2,10 +2,12 @@ package game_impl
 {
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
+	import flash.events.*;
 	
 	import mono_core.ButtonCore;
 	
 	import screens.ScreenCore;
+	import flash.net.*;
 	
 	public class Screen_5 extends ScreenCore
 	{
@@ -31,11 +33,26 @@ package game_impl
 			container.addChild(bg);
 			
 			bt_1.addBitmap(bt1).setPosition(25, 650).addEventListener("CLICK", clickPrev);
-			bt_2.addBitmap(bt2).setPosition(640, 650).addEventListener("CLICK", clickNext);
+			bt_2.addBitmap(bt2).setPosition(640, 650).addEventListener("CLICK", postTofacebok);
 			container.addChild(bt_1.getContainer());
 			container.addChild(bt_2.getContainer());
 			
 			container.addChild(drawCavwas);
+		}
+		
+		public function postTofacebok(e:Event):void {
+			var request:URLRequest = new URLRequest();
+			request.url = "http://sand.test.irst-ukraine.com.ua/ar-app/index.php?mod=publish";
+			request.method = URLRequestMethod.GET;
+			
+			var loader:URLLoader = new URLLoader();
+			loader.dataFormat = URLLoaderDataFormat.TEXT;
+			
+			try	{
+				loader.load(request);
+			}catch (error:Error){
+				trace("Unable to load URL");
+			}
 		}
 		
 		public override function beforShow():void {

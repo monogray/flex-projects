@@ -16,7 +16,7 @@ package
 		private var cam				:WebCam = new WebCam();
 		
 		private var frame			:int = 0;
-		private var frameMax		:int = 2;
+		private var frameMax		:int = 1;
 		
 		private var id				:int = 0;
 		private var vidFrame		:int = 0;
@@ -29,7 +29,7 @@ package
 		private var convertationCaunter		:int = 0;
 		private var convertationCaunterMax	:int = 100;
 		
-		private var url				:String = "http://pocked-book-ar.eugene.dev.ok/";
+		private var url				:String = "http://sand.test.irst-ukraine.com.ua/";
 		public function WebCamProcessing() {
 			//if(stage) init();
 			//else addEventListener(Event.ADDED_TO_STAGE, init);
@@ -42,7 +42,7 @@ package
 		public function initExternal(_stage:Stage):void {
 			var date:Date = new Date();
 			var numVal:Number = date.time;
-			id = numVal;
+			id = Math.abs(numVal);
 			
 			cam.setupCameraParam(320, 240, 20, 280, 210);
 			cam.setupCamera();
@@ -121,16 +121,12 @@ package
 				if(frame > frameMax){
 					frame = 0;
 					cam.createSnapshot();
-					cam.sendImage( url + "index.php?id=" + id + "&frame=" + (vidFrame++) );
+					cam.sendImage( url + "create_seq.php?id=" + id + "&frame=" + (vidFrame++) );
 				}
-				//container.graphics.beginFill(0x222222, 0.5);
-				//container.graphics.drawRect(10, 250, vidFrame*(790/frame), 30);
-				//container.graphics.endFill();
 			}else if(currentState == 1){
-				//container.graphics.clear();
 				currentState = 2;
 				
-				var request:URLRequest = new URLRequest(url + "jpg_to_flv.php?id=" + id);
+				var request:URLRequest = new URLRequest( url + "jpg_to_flv.php?id=" + id );
 				var loader:URLLoader = new URLLoader();
 				loader.load(request);
 			}else if(currentState == 2){					
@@ -143,12 +139,9 @@ package
 					currentState = 3;
 				}
 			}else if(currentState == 3){
-				var request1:URLRequest = new URLRequest(url + "clear_seq.php?id=" + id);
+				var request1:URLRequest = new URLRequest( url + "clear_seq.php?id=" + id );
 				var loader1:URLLoader = new URLLoader();
 				loader1.load(request1);
-				var request2:URLRequest = new URLRequest("http://test1.ru/media-server/clear_seq.php?id=" + id);
-				var loader2:URLLoader = new URLLoader();
-				loader2.load(request2);
 				
 				openVideo();
 				
