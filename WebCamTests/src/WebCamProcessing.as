@@ -18,7 +18,7 @@ package
 		private var frame			:int = 0;
 		private var frameMax		:int = 1;
 		
-		private var id				:int = 0;
+		public var id				:int = 0;
 		private var vidFrame		:int = 0;
 		//private var vidMaxLen		:int = 150;
 		

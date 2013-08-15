@@ -41,7 +41,7 @@ package game_impl
 		}
 		
 		public function postTofacebok(e:Event):void {
-			var request:URLRequest = new URLRequest();
+			/*var request:URLRequest = new URLRequest();
 			request.url = "http://sand.test.irst-ukraine.com.ua/ar-app/index.php?mod=publish";
 			request.method = URLRequestMethod.GET;
 			
@@ -52,7 +52,9 @@ package game_impl
 				loader.load(request);
 			}catch (error:Error){
 				trace("Unable to load URL");
-			}
+			}*/
+			var url:URLRequest = new URLRequest("http://sand.test.irst-ukraine.com.ua/ar-app/index.php?mod=publish&id="+Globals.webcam.id);
+				navigateToURL(url, "_self");
 		}
 		
 		public override function beforShow():void {
