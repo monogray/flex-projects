@@ -78,9 +78,11 @@ package game_impl
 		public override function beforShow():void {
 			if(Globals.webcam.getCurrentState() == -1)
 				Globals.webcam.setCurrentState(0);
-			isPlayed = true;
 			
-			ns.togglePause();
+			if(!isPlayed) {
+				ns.togglePause();
+			}
+			isPlayed = true;
 		}
 		
 		public override function beforHide():void {
@@ -88,9 +90,10 @@ package game_impl
 			voiceVideoTo = 0;
 			voiceCount = 0;
 			
+			if(isPlayed) {
+				ns.togglePause();
+			}
 			isPlayed = false;
-			
-			ns.togglePause();
 			ns.seek(0);
 		}
 		

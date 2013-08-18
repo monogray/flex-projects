@@ -35,6 +35,7 @@ package game_impl
 		
 		private var voiceVal			:Vector.<Number> = new Vector.<Number>(35);
 		private var voiceValMedian		:int = 0;
+		private var isNext:Boolean;
 		
 		public function Screen_1() {
 			this.setStepsCount(0);
@@ -72,7 +73,7 @@ package game_impl
 			//voiceCount += _voiceValue;
 			//voiceCount += (voiceCount < 0)?0:-15;
 			
-			putNext( Globals.webcam.getMicrophoneActivityLevel() );
+			putNext( Math.abs(Globals.webcam.getMicrophoneActivityLevel()*100) );
 			
 			
 			drawCavwas.graphics.moveTo(20, 250);
@@ -85,27 +86,46 @@ package game_impl
 				drawCavwas.graphics.endFill();
 				
 				drawCavwas.graphics.lineTo(i*2 + 20, 250-voiceVal[i]);
-				if(i > 0 && i < voiceVal.length-1){
-					if( voiceVal[i] - voiceVal[i-1] > 0 && voiceVal[i] - voiceVal[i-1] > 40 && voiceVal[i] - voiceVal[i+1] > 0 || voiceVal[i] > 99 ) {
-					if( voiceVal[i] > voiceValMedian*1.1 ){
+				if(i > 0 && i < voiceVal.length-1) {
+					//if( voiceVal[i] - voiceVal[i-1] > 0 && voiceVal[i] - voiceVal[i-1] > 40 && voiceVal[i] - voiceVal[i+1] > 0 ) {
+					//if(true){
+					if( voiceValMedian > 25 && voiceVal[i] > voiceValMedian*2){
 						drawCavwas.graphics.beginFill(0xff0000, 1);
 						drawCavwas.graphics.lineStyle();
 						drawCavwas.graphics.drawRect(i*2 + 20, 250, 2, -voiceVal[i]*1.2);
-						drawCavwas.graphics.endFill();}
+						drawCavwas.graphics.endFill();
+						
+						isNext = true;
 					}
+					//}
+					
+					voiceVal[i] = (voiceVal[i]*9 + voiceVal[i+1])/10;
 				}
-				_median += voiceVal[i];
+				if(i < voiceVal.length)
+					_median += voiceVal[i];
 				
-				if(voiceVal[i] > 0)
-					voiceVal[i] = (-101+voiceVal[i])*0.5;
+				/*if(voiceVal[i] > 0)
+					voiceVal[i] *= 0.99;
 				else 
-					voiceVal[i] = 0;
+					voiceVal[i] = 0;*/
 			}
 			
-			voiceValMedian = _median/voiceVal.length;
+			voiceValMedian = _median/(voiceVal.length/2);
 			drawCavwas.graphics.lineStyle(2, 0x00ff00);
 			drawCavwas.graphics.moveTo(20, 250-voiceValMedian);
 			drawCavwas.graphics.lineTo(voiceVal.length*2 + 20, 250-voiceValMedian);
+			
+			if(voiceValMedian > 50){
+				// TO NOISY
+				drawCavwas.graphics.beginFill(0xff0000, 1);
+				drawCavwas.graphics.drawRect(350, 50, 50, 50);
+			}else{
+				if(isNext){
+					drawCavwas.graphics.beginFill(0x00ff00, 1);
+					drawCavwas.graphics.drawRect(350, 50, 50, 50);
+					isNext = false;
+				}
+			}
 			
 			//if(voiceCount > voiceCountMax){
 				//this.nextStep();

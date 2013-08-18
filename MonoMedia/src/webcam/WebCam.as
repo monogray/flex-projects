@@ -12,7 +12,7 @@ package webcam
 	
 	public class WebCam extends Sprite
 	{
-		//WebCam 
+		// WebCam 
 		private var vid					:Video;
 		private	var cam					:Camera; 
 		private	var camId				:int = 0; 
@@ -34,8 +34,10 @@ package webcam
 
 		private var info				:String = "";
 		
+		// Microphone 
 		private var mic					:Microphone;
 		private var isMicActive			:Boolean = false;
+		private var micActivity			:Number = 0;
 		
 		public function WebCam(){
 		}
@@ -79,11 +81,11 @@ package webcam
 				info = 'Camera Access.';
 		}
 		
-		public function createSnapshot():void {
-			//imgBD.draw(vid);
+		public function createSnapshotToBitmap():void {
+			imgBD.draw(vid);
 		}
 		
-		public function sendImage(_url:String):void {
+		public function sendImageToUrl(_url:String):void {
 			imgBA = jpgEncoder.encode( capture.bitmapData );
 			
 			var sendHeader:URLRequestHeader = new URLRequestHeader("Content-type","application/octet-stream");	// Вынести!!!!!!!!!!!!
@@ -107,8 +109,11 @@ package webcam
 		
 		public function setupMicrophone():void {
 			mic = Microphone.getMicrophone(camId);
-			mic.addEventListener(StatusEvent.STATUS, this.onMicStatus);
-			mic.addEventListener(ActivityEvent.ACTIVITY, this.onMicActivity);
+			setupMicrophoneSettings(70, 44, true, false, 10, -1);
+			
+			mic.addEventListener(StatusEvent.STATUS, onMicStatus);
+			mic.addEventListener(ActivityEvent.ACTIVITY, onMicActivity);
+			mic.addEventListener(SampleDataEvent.SAMPLE_DATA, micSampleDataHandler);
 			
 			//mic.gain = 80;
 			//mic.rate = 44;
@@ -116,23 +121,18 @@ package webcam
 			//mic.setUseEchoSuppression(true);
 			//mic.setLoopBack(true); 
 			//mic.setSilenceLevel(0);
-			setupMicrophoneSettings(70, 44, true, true, 5, -1);
-			
-			/*info = "Sound input device name: " + mic.name + '\n'; 
-			info += "Gain: " + mic.gain + '\n'; 
-			info += "Rate: " + mic.rate + " kHz" + '\n'; 
-			info += "Muted: " + mic.muted + '\n'; 
-			info += "Silence level: " + mic.silenceLevel + '\n'; 
-			info += "Silence timeout: " + mic.silenceTimeout + '\n'; 
-			info += "Echo suppression: " + mic.useEchoSuppression + '\n';*/
 		}
 		
 		public function setupMicrophoneSettings(_gain:int, _rate:int, _useEchoSuppression:Boolean, _loopBack:Boolean, _silenceLevel:Number, _timeout:int=-1):void {
 			mic.gain = _gain;
 			mic.rate = _rate;
 			mic.setUseEchoSuppression(_useEchoSuppression);
-			mic.setLoopBack(_loopBack);
 			mic.setSilenceLevel(_silenceLevel, _timeout);
+			mic.setLoopBack(_loopBack);
+		}
+		
+		private function micSampleDataHandler(e:SampleDataEvent):void {
+			micActivity = e.data.readFloat();
 		}
 		
 		private function onMicStatus(event:StatusEvent):void { 
@@ -150,6 +150,10 @@ package webcam
 		
 		public function webCamLoop():void {
 			capture.bitmapData.draw(vid, mat);
+		}
+		
+		public function getMicrophoneActivity():Number {
+			return micActivity;
 		}
 		
 		public function getMicrophoneActivityLevel():Number {

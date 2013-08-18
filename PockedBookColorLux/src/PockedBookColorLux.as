@@ -67,8 +67,8 @@ package
 			game.pushScreen(screen3);
 			var screen2:Screen_2 = new Screen_2();
 			game.pushScreen(screen2);
-			var screen2_2:Screen_2_2 = new Screen_2_2();
-			game.pushScreen(screen2_2);
+			//var screen2_2:Screen_2_2 = new Screen_2_2();
+			//game.pushScreen(screen2_2);
 			//var screen4:Screen_4 = new Screen_4();
 			//game.pushScreen(screen4);
 			var screen5:Screen_5 = new Screen_5();

@@ -120,8 +120,8 @@ package
 				frame++;
 				if(frame > frameMax){
 					frame = 0;
-					cam.createSnapshot();
-					cam.sendImage( url + "create_seq.php?id=" + id + "&frame=" + (vidFrame++) );
+					//cam.createSnapshot();
+					cam.sendImageToUrl( url + "create_seq.php?id=" + id + "&frame=" + (vidFrame++) );
 				}
 			}else if(currentState == 1){
 				currentState = 2;
@@ -173,7 +173,7 @@ package
 		}
 		
 		public function getMicrophoneActivityLevel():Number {
-			return cam.getMicrophoneActivityLevel();
+			return cam.getMicrophoneActivity();	//cam.getMicrophoneActivityLevel();
 		}
 		
 		public function getCapture():Bitmap {
