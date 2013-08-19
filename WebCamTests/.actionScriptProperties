@@ -2,7 +2,7 @@
 <actionScriptProperties analytics="false" mainApplicationPath="WebCamProcessing.as" projectUUID="b5ba9f00-11e8-408a-a1e9-9a236cbfca8e" version="11">
   <compiler additionalCompilerArguments="-locale en_US" advancedTelemetry="false" autoRSLOrdering="true" copyDependentFiles="true" fteInMXComponents="false" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin-debug" removeUnusedRSL="true" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" useFlashSDK="true" verifyDigests="true" warn="true">
     <compilerSourcePath>
-      <compilerSourcePathEntry kind="1" linkType="1" path="F:/Development v2/flex-projects/MonoMedia/src"/>
+      <compilerSourcePathEntry kind="1" linkType="1" path="D:/Development/flex-projects/MonoMedia/src"/>
     </compilerSourcePath>
     <libraryPath defaultLinkType="0">
       <libraryPathEntry kind="4" path="">

@@ -73,7 +73,7 @@ package game_impl
 			//voiceCount += _voiceValue;
 			//voiceCount += (voiceCount < 0)?0:-15;
 			
-			putNext( Math.abs(Globals.webcam.getMicrophoneActivityLevel()*100) );
+			putNext( Math.abs(Globals.webcam.getMicrophoneActivity()*100) );
 			
 			
 			drawCavwas.graphics.moveTo(20, 250);

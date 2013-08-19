@@ -18,12 +18,12 @@
 		<link>
 			<name>[source path] Libs-src</name>
 			<type>2</type>
-			<location>F:/Development v2/flex-projects/Libs/src</location>
+			<location>D:/Development/flex-projects/Libs/src</location>
 		</link>
 		<link>
 			<name>[source path] MonoMedia-src</name>
 			<type>2</type>
-			<location>F:/Development v2/flex-projects/MonoMedia/src</location>
+			<location>D:/Development/flex-projects/MonoMedia/src</location>
 		</link>
 	</linkedResources>
 </projectDescription>

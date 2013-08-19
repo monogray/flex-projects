@@ -46,6 +46,7 @@ package game_impl
 		
 		private var isPlayed			:Boolean = false;
 		//private var capture1			:Bitmap = new Bitmap( new BitmapData(640, 480, false, 0xff0000) );
+		private var isToNext			:Boolean = false;
 		
 		private var drawCavwas			:Sprite = new Sprite();
 		
@@ -71,6 +72,10 @@ package game_impl
 			voice.alpha = 0.8;
 		}
 		
+		public override function clickNext(e:Event):void {
+			isToNext = true;
+		}
+		
 		public function next(e:MouseEvent):void {
 			voiceCount += 1000;
 		}
@@ -83,6 +88,7 @@ package game_impl
 				ns.togglePause();
 			}
 			isPlayed = true;
+			isToNext = false;
 		}
 		
 		public override function beforHide():void {
@@ -94,6 +100,7 @@ package game_impl
 				ns.togglePause();
 			}
 			isPlayed = false;
+			isToNext = false;
 			ns.seek(0);
 		}
 		
@@ -104,10 +111,14 @@ package game_impl
 			drawCavwas.graphics.drawCircle(400, 350, ns.time*20*(390/voiceCountMax));
 			drawCavwas.graphics.endFill();
 			
-			var _voiceValue:Number = Globals.webcam.getMicrophoneActivityLevelIsActive() * 0.8;
-			if(_voiceValue < 20) _voiceValue = 0;
-			voiceCount += _voiceValue;
-			voiceCount += (voiceCount < 0)?0:-15;
+			if(!isToNext){
+				var _voiceValue:Number = Globals.webcam.getMicrophoneActivityLevelIsActive() * 0.6;
+				if(_voiceValue < 25) _voiceValue = 0;
+				voiceCount += _voiceValue;
+				voiceCount += (voiceCount < 0)?0:-20;
+			}else{
+				voiceCount += 20;
+			}
 			
 			if(voiceVideo < voiceCount) {
 				voiceVideo = voiceCount;
@@ -129,12 +140,10 @@ package game_impl
 				}
 			}
 			
-			if(ns.time*20 > 220){
+			if(ns.time*20 > 50){
 				this.nextStep();
 			}
 		}
-		
-		
 		
 		protected function openVideo2():void {
 			container.addChild(video1);
