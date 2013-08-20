@@ -2,6 +2,7 @@ package screens
 {
 	import com.greensock.*;
 	import com.greensock.easing.*;
+	import com.greensock.plugins.*;
 	
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -22,6 +23,8 @@ package screens
 			super();
 			container.addChild( getLabel() );
 			hideImmediately();
+			
+			TweenPlugin.activate([AutoAlphaPlugin]);
 		}
 		
 		public function getCurrentStep():int {
@@ -67,22 +70,25 @@ package screens
 		public function hide():void {
 			if(isVisible != false){
 				beforHide();
-				TweenLite.to(container, 0.5, {x:-screenW, y:0, ease:Bounce.easeOut});
+				//TweenLite.to(container, 0.5, {x:-screenW, y:0, ease:Bounce.easeOut});
+				TweenLite.to(container, 0.5, {autoAlpha:0});
 				isVisible = false;
 			}
 		}
 		
 		public function hideImmediately():void {
 			//beforHide();
-			TweenLite.to(container, 0, {x:-screenW, y:0});
+			//TweenLite.to(container, 0, {x:-screenW, y:0});
+			TweenLite.to(container, 0, {autoAlpha:0});
 			isVisible = false;
 		}
 		
 		public function show():void {
 			if(isVisible != true){
 				beforShow();
-				container.x = screenW;
-				TweenLite.to(container, 0.5, {x:0, y:0, ease:Bounce.easeOut});
+				//container.x = screenW;
+				//TweenLite.to(container, 0.5, {x:0, y:0, ease:Bounce.easeOut});
+				TweenLite.to(container, 1.5, {autoAlpha:1});
 				isVisible = true;
 			}
 		}

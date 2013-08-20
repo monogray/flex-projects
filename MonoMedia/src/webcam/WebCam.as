@@ -39,7 +39,7 @@ package webcam
 		private var isMicActive			:Boolean = false;
 		private var micActivity			:Number = 0;
 		
-		public function WebCam(){
+		public function WebCam() {
 		}
 		
 		public function setupCameraParam(_videoOutputWidth:int, _videoOutputHeight:int, _videoFPS:int, _videoWidth:int, _videoHeight:int):void {
@@ -76,9 +76,9 @@ package webcam
 			// Camera.Muted or Camera.Unmuted -> User's security
 			// trace(event.code)
 			if (cam.muted == true)
-				info = 'Camera Access Rejected.';
+				info = 'Camera Access Rejected';
 			else 
-				info = 'Camera Access.';
+				info = 'Camera Access';
 		}
 		
 		public function createSnapshotToBitmap():void {
@@ -86,9 +86,9 @@ package webcam
 		}
 		
 		public function sendImageToUrl(_url:String):void {
-			imgBA = jpgEncoder.encode( capture.bitmapData );
+			imgBA = jpgEncoder.encode(capture.bitmapData);
 			
-			var sendHeader:URLRequestHeader = new URLRequestHeader("Content-type","application/octet-stream");	// Вынести!!!!!!!!!!!!
+			var sendHeader:URLRequestHeader = new URLRequestHeader("Content-type", "application/octet-stream");		// Вынести!!!!!!!!!!!!
 			var sendReq:URLRequest = new URLRequest(_url);
 			sendReq.requestHeaders.push(sendHeader);
 			sendReq.method = URLRequestMethod.POST;
@@ -114,7 +114,6 @@ package webcam
 			mic.addEventListener(StatusEvent.STATUS, onMicStatus);
 			mic.addEventListener(ActivityEvent.ACTIVITY, onMicActivity);
 			mic.addEventListener(SampleDataEvent.SAMPLE_DATA, micSampleDataHandler);
-			
 			//mic.gain = 80;
 			//mic.rate = 44;
 			//mic.noiseSuppressionLevel(10);
@@ -144,7 +143,7 @@ package webcam
 		}
 		
 		private function onMicActivity(event:ActivityEvent):void { 
-			info = "activating=" + event.activating + ", activityLevel=" + mic.activityLevel;
+			info = "activating = " + event.activating + ", activityLevel = " + mic.activityLevel;
 			isMicActive = event.activating;
 		}
 		
@@ -161,10 +160,8 @@ package webcam
 		}
 		
 		public function getMicrophoneActivityLevelIsActive():Number {
-			if(isMicActive)
-				return mic.activityLevel;
-			else 
-				return 0;
+			if(isMicActive)	return mic.activityLevel;
+			else			return 0;
 		}
 		
 		public function getVideo():Video {

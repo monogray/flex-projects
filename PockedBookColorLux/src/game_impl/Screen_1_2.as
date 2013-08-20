@@ -30,22 +30,17 @@ package game_impl
 		private var voiceClass		:Class;
 		private var voice			:Bitmap = new voiceClass();
 		
-		/*[Embed(source = "../../assets/flv/movie.flv", mimeType = "application/octet-stream")]
-		public var movieBytes:Class;*/
-		
 		private var video1				:Video = new Video(760, 760);
-		private var ns			
-		:NetStream
+		private var ns					:NetStream;
 		
-		private var voiceCount			:int = 0;
-		private var voiceCountMax		:int = 1000;
+		private var voiceCount			:Number = 0;
+		private var voiceCountMax		:Number = 1000;
 		
-		private var voiceVideo			:int = 0;
+		private var voiceVideo			:Number = 0;
 		private var voiceVideoTo		:Number = 0;
-		private var voiceVideoCountMax	:int = 500;
+		private var voiceVideoCountMax	:Number = 500;
 		
 		private var isPlayed			:Boolean = false;
-		//private var capture1			:Bitmap = new Bitmap( new BitmapData(640, 480, false, 0xff0000) );
 		private var isToNext			:Boolean = false;
 		
 		private var drawCavwas			:Sprite = new Sprite();
@@ -113,9 +108,9 @@ package game_impl
 			
 			if(!isToNext){
 				var _voiceValue:Number = Globals.webcam.getMicrophoneActivityLevelIsActive() * 0.6;
-				if(_voiceValue < 25) _voiceValue = 0;
-				voiceCount += _voiceValue;
-				voiceCount += (voiceCount < 0)?0:-20;
+				if(_voiceValue < 50) _voiceValue = 0;
+				voiceCount += _voiceValue/20;
+				//voiceCount += (voiceCount < voiceVideo)?0:-voiceCount/5;
 			}else{
 				voiceCount += 20;
 			}
@@ -140,7 +135,7 @@ package game_impl
 				}
 			}
 			
-			if(ns.time*20 > 50){
+			if(ns.time*20 > 75){
 				this.nextStep();
 			}
 		}
@@ -162,7 +157,6 @@ package game_impl
 			
 			ns.play("http://www.helpexamples.com/flash/video/cuepoints.flv");
 			//ns.play("http://pocked-book-ar.eugene.dev.ok/movie.flv");
-			
 			ns.togglePause();
 		}
 		

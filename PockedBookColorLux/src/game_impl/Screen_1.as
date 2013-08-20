@@ -1,7 +1,11 @@
 package game_impl
 {
-	import flash.display.*;
-	import flash.events.*;
+	import flash.display.Bitmap;
+	import flash.display.Sprite;
+	import flash.events.MouseEvent;
+	import flash.media.Video;
+	import flash.net.NetConnection;
+	import flash.net.NetStream;
 	
 	import mono_core.ButtonCore;
 	
@@ -25,21 +29,31 @@ package game_impl
 		private var voiceClass			:Class;
 		private var voice				:Bitmap = new voiceClass();
 		
-		private var voiceCount			:int = 0;
-		private var voiceCountMax		:int = 1000;
+		private var voiceCount			:Number = 0;
+		private var voiceCountMax		:Number = 1000;
 		
 		private var drawCavwas			:Sprite = new Sprite();
 		
 		private var bt_1				:ButtonCore = new ButtonCore();
 		private var bt_2				:ButtonCore = new ButtonCore();
 		
-		private var voiceVal			:Vector.<Number> = new Vector.<Number>(35);
-		private var voiceValMedian		:int = 0;
-		private var isNext:Boolean;
+		private var voiceVal			:Vector.<Number> = new Vector.<Number>(25);
+		private var voiceValMedian		:Number = 0;
+		private var isNext				:Boolean;
+		
+		private var video1				:Video = new Video(760, 760);
+		private var ns					:NetStream;
+		
+		private var isPlayed			:Boolean = false;
+		private var isToNext			:Boolean = false;
+		
+		private var voiceVideo			:Number = 0;
+		private var voiceVideoTo		:Number = 0;
 		
 		public function Screen_1() {
-			this.setStepsCount(0);
 			container.addChild(bg);
+			
+			openVideo2();
 			
 			bt_1.addBitmap(bt1).setPosition(25, 650).addEventListener("CLICK", clickPrev);
 			bt_2.addBitmap(bt2).setPosition(640, 650).addEventListener("CLICK", clickNext);
@@ -54,12 +68,31 @@ package game_impl
 		}
 		
 		public function next(e:MouseEvent):void {
-			voiceCount += 1000;
+			//voiceCount += 1000;
+			isToNext = true;
 		}
 		
 		public override function beforShow():void {
 			if(Globals.webcam.getCurrentState() == -1)
 				Globals.webcam.setCurrentState(0);
+			
+			if(!isPlayed) {
+				ns.togglePause();
+			}
+			isPlayed = true;
+			isToNext = false;
+			
+			voiceCount = 0;
+			voiceVideoTo = 0;
+		}
+		
+		public override function beforHide():void {
+			if(isPlayed) {
+				ns.togglePause();
+			}
+			isPlayed = false;
+			isToNext = false;
+			ns.seek(0);
 		}
 		
 		public override function loop():void {
@@ -75,7 +108,6 @@ package game_impl
 			
 			putNext( Math.abs(Globals.webcam.getMicrophoneActivity()*100) );
 			
-			
 			drawCavwas.graphics.moveTo(20, 250);
 			
 			var _median:int = 0
@@ -89,7 +121,7 @@ package game_impl
 				if(i > 0 && i < voiceVal.length-1) {
 					//if( voiceVal[i] - voiceVal[i-1] > 0 && voiceVal[i] - voiceVal[i-1] > 40 && voiceVal[i] - voiceVal[i+1] > 0 ) {
 					//if(true){
-					if( voiceValMedian > 25 && voiceVal[i] > voiceValMedian*2){
+					if( voiceValMedian > 25 && voiceVal[i] > voiceValMedian*2.5){
 						drawCavwas.graphics.beginFill(0xff0000, 1);
 						drawCavwas.graphics.lineStyle();
 						drawCavwas.graphics.drawRect(i*2 + 20, 250, 2, -voiceVal[i]*1.2);
@@ -124,7 +156,38 @@ package game_impl
 					drawCavwas.graphics.beginFill(0x00ff00, 1);
 					drawCavwas.graphics.drawRect(350, 50, 50, 50);
 					isNext = false;
+					
+					isToNext = true;
 				}
+			}
+			
+			
+			if(isToNext){
+				voiceCount += 0.9;
+			}
+			
+			if(voiceVideo < voiceCount) {
+				voiceVideo = voiceCount;
+			}
+			
+			if(voiceVideoTo < voiceVideo) {
+				voiceVideoTo = voiceVideo;
+			}
+			
+			if(ns.time*20 < voiceVideoTo) {
+				if(!isPlayed) {
+					isPlayed = true;
+					ns.togglePause();
+				}
+			}else {
+				if(isPlayed){
+					isPlayed = false;
+					ns.togglePause();
+				}
+			}
+			
+			if(ns.time*20 > 75){
+				this.nextStep();
 			}
 			
 			//if(voiceCount > voiceCountMax){
@@ -132,6 +195,26 @@ package game_impl
 				//voiceCount = 0;
 				//drawCavwas.graphics.clear();
 			//}
+		}
+		
+		protected function openVideo2():void {
+			container.addChild(video1);
+			
+			var nc:NetConnection = new NetConnection();
+			nc.connect(null);
+			ns = new NetStream(nc);
+			//ns.client = customClient;
+			video1.attachNetStream(ns);
+			
+			var netClient:Object = new Object();
+			netClient.onMetaData = function(meta:Object):void {
+				//	trace(meta.duration);
+			};
+			ns.client = netClient;	
+			
+			ns.play("http://www.helpexamples.com/flash/video/cuepoints.flv");
+			//ns.play("http://pocked-book-ar.eugene.dev.ok/movie.flv");
+			ns.togglePause();
 		}
 		
 		private function putNext(_val:Number):void {
