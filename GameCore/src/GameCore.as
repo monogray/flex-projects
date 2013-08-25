@@ -45,23 +45,19 @@ package
 		
 		private function nextScreen(e:Event):void {
 			currentScreen++;
-			if(currentScreen > screenPool.length-1){
+			if(currentScreen > screenPool.length-1)
 				currentScreen = 0;
-			}
 		}
 		
 		private function prevScreen(e:Event):void {
 			currentScreen--;
-			if(currentScreen < 0){
+			if(currentScreen < 0)
 				currentScreen = screenPool.length-1;
-			}
 		}
 		private function updateScreens():void {
 			for(var i:int = 0; i < screenPool.length; i++) {
-				if(i == currentScreen)
-					screenPool[i].show();
-				else
-					screenPool[i].hide();
+				if(i == currentScreen)	screenPool[i].show();
+				else					screenPool[i].hide();
 			}
 		}
 		

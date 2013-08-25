@@ -28,7 +28,7 @@ package game_impl
 			this.setStepsCount(0);
 			container.addChild(bg);
 			
-			bt_1.addBitmap(bt1).setPosition(450, 650).addEventListener("CLICK", clickWith);
+			bt_1.addBitmap(bt1).setPosition(460, 650).addEventListener("CLICK", clickWith);
 			bt_2.addBitmap(bt2).setPosition(80, 650).addEventListener("CLICK", clickWithout);
 			container.addChild(bt_1.getContainer());
 			container.addChild(bt_2.getContainer());
@@ -43,6 +43,13 @@ package game_impl
 		}
 		
 		public override function loop():void {
+			if(Globals.webcam.getCam().getCamera().muted){
+				bt_2.getContainer().visible = false;
+				bt_1.setPosition(300, 650);
+			}else{
+				bt_2.getContainer().visible = true;
+				bt_1.setPosition(460, 650);
+			}
 		}
 	}
 }

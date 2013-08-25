@@ -25,17 +25,18 @@ package game_impl
 		
 		private var drawCavwas			:Sprite = new Sprite();
 		
-		private var bt_1				:ButtonCore = new ButtonCore();
+	//	private var bt_1				:ButtonCore = new ButtonCore();
 		private var bt_2				:ButtonCore = new ButtonCore();
 		
 		public function Screen_5() {
 			this.setStepsCount(0);
 			container.addChild(bg);
 			
-			bt_1.addBitmap(bt1).setPosition(25, 650).addEventListener("CLICK", clickPrev);
-			bt_2.addBitmap(bt2).setPosition(640, 650).addEventListener("CLICK", postTofacebok);
-			container.addChild(bt_1.getContainer());
+			//bt_1.addBitmap(bt1).setPosition(25, 650).addEventListener("CLICK", clickPrev);
+			bt_2.addBitmap(bt2).setPosition(385, 650).addEventListener("CLICK", postTofacebok);
+			//container.addChild(bt_1.getContainer());
 			container.addChild(bt_2.getContainer());
+			bt_2.getContainer().visible = false;
 			
 			container.addChild(drawCavwas);
 		}
@@ -53,8 +54,9 @@ package game_impl
 			}catch (error:Error){
 				trace("Unable to load URL");
 			}*/
+			
 			var url:URLRequest = new URLRequest("http://sand.test.irst-ukraine.com.ua/ar-app/index.php?mod=publish&id="+Globals.webcam.id);
-				navigateToURL(url, "_self");
+			navigateToURL(url, "_self");
 		}
 		
 		public override function beforShow():void {
@@ -63,6 +65,9 @@ package game_impl
 		}
 		
 		public override function loop():void {
+			if(Globals.webcam.getCurrentState() == 3){
+				bt_2.getContainer().visible = true;
+			}
 		}
 	}
 }

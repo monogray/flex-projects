@@ -56,6 +56,7 @@ package game_impl
 	
 		public function Screen_2() {
 			this.setStepsCount(2);
+			
 			container.addChild(bg);
 			
 			contentMask.graphics.beginFill(0xff0000, 1);
@@ -73,7 +74,7 @@ package game_impl
 			content.mask = contentMask;
 			
 			bt_1.addBitmap(bt1).setPosition(25, 650).addEventListener("CLICK", clickPrev);
-			bt_2.addBitmap(bt2).setPosition(640, 650).addEventListener("CLICK", clickNext);
+			bt_2.addBitmap(bt2).setPosition(690, 650).addEventListener("CLICK", clickNext);
 			container.addChild(bt_1.getContainer());
 			container.addChild(bt_2.getContainer());
 			
@@ -117,10 +118,10 @@ package game_impl
 			}
 			
 			drawCavwas.graphics.clear();
-			/*drawCavwas.graphics.beginFill(0xffffff, 0.3);
-			drawCavwas.graphics.drawCircle(400, 350, motionValMedian*(390/motionCountMax));
-			drawCavwas.graphics.drawCircle(400, 350, motionCount*(390/motionCountMax));
-			drawCavwas.graphics.endFill();*/
+			//drawCavwas.graphics.beginFill(0xffffff, 0.3);
+			//drawCavwas.graphics.drawCircle(400, 350, motionValMedian*(390/motionCountMax));
+			//drawCavwas.graphics.drawCircle(400, 350, motionCount*(390/motionCountMax));
+			//drawCavwas.graphics.endFill();
 			
 			drawCavwas.graphics.moveTo(20, 450);
 			for(var i:int = 0; i < motionVal.length; i++){
@@ -137,15 +138,15 @@ package game_impl
 			}
 			
 			if(isEnd){
-				/*endCounter++;
-				drawCavwas.graphics.clear();
-				if(endCounter > endCounterMax){
-					isEnd = false;
-					endCounter = 0;
-					this.nextStep();
-					motionCount = 0;
-					firstDelay = 0;
-				}*/
+				//endCounter++;
+				//drawCavwas.graphics.clear();
+				//if(endCounter > endCounterMax){
+				//	isEnd = false;
+				//	endCounter = 0;
+				//	this.nextStep();
+				//	motionCount = 0;
+				//	firstDelay = 0;
+				//}
 				
 				if(this.currentStep == 0){
 					TweenLite.to(content, 0.8, {x:-153, ease:Bounce.easeOut});

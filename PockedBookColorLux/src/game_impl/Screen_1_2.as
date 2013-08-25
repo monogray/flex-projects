@@ -55,12 +55,11 @@ package game_impl
 			container.addChild(drawCavwas);
 			
 			container.addChild(voice);
-			voice.x = 305;
-			voice.y = 255;
-			voice.alpha = 0.8;
+			this.setPos(voice, 700, 20).setScale(voice, 0.5, 0.5);
+			voice.alpha = 0.9;
 			
 			bt_1.addBitmap(bt1).setPosition(25, 650).addEventListener("CLICK", clickPrev);
-			bt_2.addBitmap(bt2).setPosition(640, 650).addEventListener("CLICK", clickNext);
+			bt_2.addBitmap(bt2).setPosition(690, 650).addEventListener("CLICK", clickNext);
 			container.addChild(bt_1.getContainer());
 			container.addChild(bt_2.getContainer());
 		}
@@ -98,14 +97,15 @@ package game_impl
 		}
 		
 		public override function loop():void {
-			drawCavwas.graphics.clear();
+			/*drawCavwas.graphics.clear();
 			drawCavwas.graphics.beginFill(0xffffff, 0.5);
 			drawCavwas.graphics.drawCircle(400, 350, voiceCount*(390/voiceCountMax));
 			drawCavwas.graphics.drawCircle(400, 350, ns.time*20*(390/voiceCountMax));
-			drawCavwas.graphics.endFill();
+			drawCavwas.graphics.endFill();*/
 			
+			var _voiceValue:Number;
 			if(!isToNext){
-				var _voiceValue:Number = Globals.webcam.getMicrophoneActivityLevelIsActive() * 0.6;
+				_voiceValue = Globals.webcam.getMicrophoneActivityLevelIsActive() * 0.6;
 				if(_voiceValue < 60) _voiceValue = 0;
 				voiceCount += _voiceValue/20;
 				//voiceCount += (voiceCount < voiceVideo)?0:-voiceCount/5;
@@ -121,7 +121,8 @@ package game_impl
 				voiceVideoTo = voiceVideo;
 			}
 			
-			if(ns.time*20 < voiceVideoTo) {
+			//if(ns.time*20 < voiceVideoTo) {
+			if(_voiceValue != 0) {
 				if(!isPlayed) {
 					isPlayed = true;
 					ns.togglePause();

@@ -172,6 +172,10 @@ package webcam
 			return capture;
 		}
 		
+		public function getCamera():Camera {
+			return cam;
+		}
+		
 		public function getInfo():String {
 			return info;
 		}

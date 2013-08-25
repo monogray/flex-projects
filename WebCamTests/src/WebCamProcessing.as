@@ -16,9 +16,9 @@ package
 		private var cam				:WebCam = new WebCam();
 		
 		private var frame			:int = 0;
-		private var frameMax		:int = 1;
+		private var frameMax		:int = 2;
 		
-		public var id				:int = 0;
+		public  var id				:int = 0;
 		private var vidFrame		:int = 0;
 		//private var vidMaxLen		:int = 150;
 		
@@ -27,7 +27,7 @@ package
 		private var container		:Sprite = new Sprite();
 		
 		private var convertationCaunter		:int = 0;
-		private var convertationCaunterMax	:int = 100;
+		private var convertationCaunterMax	:int = 100 + Math.random()*250;
 		
 		private var url				:String = "http://sand.test.irst-ukraine.com.ua/";
 		public function WebCamProcessing() {
@@ -125,7 +125,6 @@ package
 				}
 			}else if(currentState == 1){
 				currentState = 2;
-				
 				var request:URLRequest = new URLRequest( url + "jpg_to_flv.php?id=" + id );
 				var loader:URLLoader = new URLLoader();
 				loader.load(request);
@@ -160,8 +159,8 @@ package
 			vid.scaleX = 3.5;
 			vid.scaleY = 3.5;
 			this.addChild(vid);
-			vid.y = 300
-			vid.x = 300;
+			vid.y = 250
+			vid.x = 270;
 		}
 		
 		public function getCam():WebCam {

@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html> 
+    <head>
+        <title></title>
+        <meta name="google" value="notranslate" />         
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      
+        <style type="text/css" media="screen"> 
+            html, body  { width:100%; height:100%; }
+            body {	margin:0;
+					padding:0;
+					overflow:auto;
+					background-color: #6b6e70;
+			}
+			#animate_bg, #animate_bg_2{
+				position:fixed;
+				top:0;
+				left:0;
+			}
+			#bg{
+				position:fixed;
+				top:0;
+				left:0;
+			}
+			#game_embed_container{
+				position:fixed;
+				top:0;
+				left:0;
+			}
+        </style>
+		
+		<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+    </head>
+    <body>
+	<img src="img/bg.jpg" id="bg"/>
+	<img src="img/bg_2.png" id="animate_bg"/>
+	<img src="img/bg_2.png" id="animate_bg_2"/>
+		<div id="game_embed_container">
+			<embed
+				id="game_object"
+				width="810"
+				height="760"
+				name="FacebookGame"
+				wmode="transparent"
+				allowfullscreen="true"
+				FlashVars=""
+				src="../bin-debug/PockedBookColorLux.swf"
+				type="application/x-shockwave-flash"
+			/>
+		</div>
+		
+		<script>
+			var w = 0;
+			$(document).ready(function() {
+				bgPosition();
+				setInterval(bgPosition, 3000);
+				
+				$("body").mousemove(function(event) {
+					$("#animate_bg").css("margin-left", (w/2-event.pageX/8-500)+"px");
+					$("#animate_bg").css("margin-top", (event.pageY/8)+"px");
+					
+					$("#animate_bg_2").css("margin-left", (w/2-event.pageX/15-500)+"px");
+					$("#animate_bg_2").css("margin-top", (event.pageY/15)+"px");
+				});
+			});
+			
+			function bgPosition(){
+				w = $(document).width();
+				$("#game_embed_container").css("margin-left", (w/2-810/2)+"px");
+				$("#bg").css("margin-left", (w/2-1920/2)+"px");
+			}
+		</script>
+		
+   </body>
+</html>

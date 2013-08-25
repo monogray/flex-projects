@@ -58,15 +58,15 @@ package game_impl
 			setPos(pkOn, 155, 30).setScale(pkOn, 1.5, 1.5);
 			
 			bt_1.addBitmap(bt1).setPosition(25, 650).addEventListener("CLICK", clickPrev);
-			bt_2.addBitmap(bt2).setPosition(640, 650).addEventListener("CLICK", clickNext);
+			bt_2.addBitmap(bt2).setPosition(690, 650).addEventListener("CLICK", clickNext);
 			container.addChild(bt_1.getContainer());
 			container.addChild(bt_2.getContainer());
 			
 			container.addChild(drawCavwas);
 			
 			container.addChild(light);
-			light.x = 320;
-			light.y = 255;
+			this.setPos(light, 700, 20).setScale(light, 0.5, 0.5);
+			light.alpha = 0.9;
 		}
 		
 		public override function clickNext(e:Event):void {
@@ -74,7 +74,16 @@ package game_impl
 		}
 		
 		public override function beforShow():void {
+			toFirstSatate();
+		}
+		
+		public override function beforHide():void {
+			toFirstSatate();
+		}
+		
+		public function toFirstSatate():void {
 			pkOn.alpha = 0;
+			light.alpha = 0.9;
 			
 			isToNext = false;
 			luminosityCount = 0;
@@ -108,6 +117,7 @@ package game_impl
 			
 			if(isToNext){
 				pkOn.alpha += 0.03;
+				if(light.alpha > 0) light.alpha -= 0.05;
 				if(pkOn.alpha > 2)
 					this.nextStep();
 			}
