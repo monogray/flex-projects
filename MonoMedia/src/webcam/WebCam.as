@@ -39,6 +39,8 @@ package webcam
 		private var isMicActive			:Boolean = false;
 		private var micActivity			:Number = 0;
 		
+		private var sendLoader			:URLLoader = new URLLoader();
+		
 		public function WebCam() {
 		}
 		
@@ -94,8 +96,8 @@ package webcam
 			sendReq.method = URLRequestMethod.POST;
 			sendReq.data = imgBA;
 			
-			var sendLoader:URLLoader;				// Вынести!!!!!!!!!!!!
-			sendLoader = new URLLoader();
+			//var sendLoader:URLLoader;				// Вынести!!!!!!!!!!!!
+			//sendLoader = new URLLoader();
 			//sendLoader.addEventListener(Event.COMPLETE, imageSentHandler);
 			sendLoader.load(sendReq);
 		}
