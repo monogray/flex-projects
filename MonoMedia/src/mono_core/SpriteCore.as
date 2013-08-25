@@ -44,9 +44,16 @@ package mono_core
 			addChild(label);
 		}
 		
-		public function setPos(_obj:Object, _x:int, _y:int):void {
+		public function setPos(_obj:Object, _x:Number, _y:Number):SpriteCore {
 			_obj.x = _x;
 			_obj.y = _y;
+			return this;
+		}
+		
+		public function setScale(_obj:Object, _scaleX:Number, _scaleY:Number):SpriteCore {
+			_obj.scaleX = _scaleX;
+			_obj.scaleY = _scaleY;
+			return this;
 		}
 		
 		public function putValueInVector_number(_vector:Vector.<Number>, _val:Number):void {

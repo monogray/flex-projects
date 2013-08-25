@@ -2,6 +2,7 @@ package game_impl
 {
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.media.Video;
 	import flash.net.NetConnection;
@@ -29,6 +30,14 @@ package game_impl
 		private var voiceClass			:Class;
 		private var voice				:Bitmap = new voiceClass();
 		
+		[Embed(source = '../../assets/screen_1/pocket-off.png')]
+		private var pkClass1			:Class;
+		private var pkOff				:Bitmap = new pkClass1();
+		
+		[Embed(source = '../../assets/screen_1/pk-lightOff.png')]
+		private var pkClass2			:Class;
+		private var pkOn				:Bitmap = new pkClass2();
+		
 		private var voiceCount			:Number = 0;
 		private var voiceCountMax		:Number = 1000;
 		
@@ -37,23 +46,33 @@ package game_impl
 		private var bt_1				:ButtonCore = new ButtonCore();
 		private var bt_2				:ButtonCore = new ButtonCore();
 		
-		private var voiceVal			:Vector.<Number> = new Vector.<Number>(25);
+		private var voiceVal			:Vector.<Number> = new Vector.<Number>(15);
 		private var voiceValMedian		:Number = 0;
+		
 		private var isNext				:Boolean;
+		private var isNextCounter		:int = 0;
+		private var isNextCounterMax	:int = 7;
 		
-		private var video1				:Video = new Video(760, 760);
-		private var ns					:NetStream;
+		private var noisyCounter		:int = 0;
+		private var noisyCounterMax		:int = 8;
 		
-		private var isPlayed			:Boolean = false;
+		//private var vid					:Video = new Video(810, 760);
+		//private var ns					:NetStream;
+		
+		//private var isPlayed			:Boolean = false;
 		private var isToNext			:Boolean = false;
 		
-		private var voiceVideo			:Number = 0;
-		private var voiceVideoTo		:Number = 0;
+		//private var voiceVideo			:Number = 0;
+		//private var voiceVideoTo		:Number = 0;
 		
 		public function Screen_1() {
 			container.addChild(bg);
 			
-			openVideo2();
+			//openVideo2();
+			container.addChild(pkOff);
+			setPos(pkOff, 155, 30).setScale(pkOff, 1.5, 1.5);
+			container.addChild(pkOn);
+			setPos(pkOn, 155, 30).setScale(pkOn, 1.5, 1.5);
 			
 			bt_1.addBitmap(bt1).setPosition(25, 650).addEventListener("CLICK", clickPrev);
 			bt_2.addBitmap(bt2).setPosition(640, 650).addEventListener("CLICK", clickNext);
@@ -63,39 +82,49 @@ package game_impl
 			container.addChild(drawCavwas);
 			
 			container.addChild(voice);
-			this.setPos(voice, 305, 255);
+			setPos(voice, 305, 255);
 			voice.alpha = 0.8;
 		}
 		
-		public function next(e:MouseEvent):void {
-			//voiceCount += 1000;
+		public override function clickNext(e:Event):void {
 			isToNext = true;
 		}
+		
+		//public function next(e:MouseEvent):void {
+			//voiceCount += 1000;
+			//isToNext = true;
+		//}
 		
 		public override function beforShow():void {
 			if(Globals.webcam.getCurrentState() == -1)
 				Globals.webcam.setCurrentState(0);
 			
-			if(!isPlayed) {
+			/*if(!isPlayed) {
 				ns.togglePause();
 			}
-			isPlayed = true;
+			isPlayed = true;*/
+			isNext = false;
 			isToNext = false;
 			
 			voiceCount = 0;
-			voiceVideoTo = 0;
+			//voiceVideoTo = 0;
+			//voiceVideo = 0;
+			
+			pkOn.alpha = 0;
 		}
 		
 		public override function beforHide():void {
-			if(isPlayed) {
+			/*if(isPlayed) {
 				ns.togglePause();
 			}
-			isPlayed = false;
+			isPlayed = false;*/
 			isToNext = false;
-			ns.seek(0);
+			isNext = false;
+			//ns.seek(0);
 		}
 		
 		public override function loop():void {
+			// Draw debug
 			drawCavwas.graphics.clear();
 			drawCavwas.graphics.beginFill(0xffffff, 0.5);
 			drawCavwas.graphics.drawCircle(400, 350, voiceCount*(390/voiceCountMax));
@@ -106,7 +135,8 @@ package game_impl
 			//voiceCount += _voiceValue;
 			//voiceCount += (voiceCount < 0)?0:-15;
 			
-			putNext( Math.abs(Globals.webcam.getMicrophoneActivity()*100) );
+			//putNext( Math.abs(Globals.webcam.getMicrophoneActivity()*100) );
+			putValueInVector_number(voiceVal, Math.abs(Globals.webcam.getMicrophoneActivity()*100));
 			
 			drawCavwas.graphics.moveTo(20, 250);
 			
@@ -121,13 +151,14 @@ package game_impl
 				if(i > 0 && i < voiceVal.length-1) {
 					//if( voiceVal[i] - voiceVal[i-1] > 0 && voiceVal[i] - voiceVal[i-1] > 40 && voiceVal[i] - voiceVal[i+1] > 0 ) {
 					//if(true){
-					if( voiceValMedian > 25 && voiceVal[i] > voiceValMedian*2.5){
+					if( voiceValMedian > 25 && voiceVal[i] > voiceValMedian*2.5 ){
 						drawCavwas.graphics.beginFill(0xff0000, 1);
 						drawCavwas.graphics.lineStyle();
 						drawCavwas.graphics.drawRect(i*2 + 20, 250, 2, -voiceVal[i]*1.2);
 						drawCavwas.graphics.endFill();
 						
 						isNext = true;
+						isNextCounter = isNextCounterMax;
 					}
 					//}
 					
@@ -151,22 +182,36 @@ package game_impl
 				// TO NOISY
 				drawCavwas.graphics.beginFill(0xff0000, 1);
 				drawCavwas.graphics.drawRect(350, 50, 50, 50);
-			}else{
-				if(isNext){
-					drawCavwas.graphics.beginFill(0x00ff00, 1);
-					drawCavwas.graphics.drawRect(350, 50, 50, 50);
-					isNext = false;
-					
-					isToNext = true;
-				}
+				
+				noisyCounter = noisyCounterMax;
 			}
 			
+			if(isNext && isNextCounter == 0){
+				drawCavwas.graphics.beginFill(0x00ff00, 1);
+				drawCavwas.graphics.drawRect(350, 50, 50, 50);
+				
+				isNext = false;
+				isToNext = true;
+			}
+			
+			if(isNextCounter > 0)	isNextCounter--;
+			else					isNextCounter = 0;
+			
+			if(noisyCounter > 0){
+				isNext = false;
+				noisyCounter--;
+			}else{
+				noisyCounter = 0;
+			}
 			
 			if(isToNext){
-				voiceCount += 0.9;
+				//voiceCount += 0.9;
+				pkOn.alpha += 0.03;
+				if(pkOn.alpha > 2)
+					this.nextStep();
 			}
 			
-			if(voiceVideo < voiceCount) {
+			/*if(voiceVideo < voiceCount) {
 				voiceVideo = voiceCount;
 			}
 			
@@ -186,9 +231,9 @@ package game_impl
 				}
 			}
 			
-			if(ns.time*20 > 75){
+			if(ns.time*20 > 30){
 				this.nextStep();
-			}
+			}*/
 			
 			//if(voiceCount > voiceCountMax){
 				//this.nextStep();
@@ -197,14 +242,14 @@ package game_impl
 			//}
 		}
 		
-		protected function openVideo2():void {
-			container.addChild(video1);
+		/*protected function openVideo2():void {
+			container.addChild(vid);
 			
 			var nc:NetConnection = new NetConnection();
 			nc.connect(null);
 			ns = new NetStream(nc);
 			//ns.client = customClient;
-			video1.attachNetStream(ns);
+			vid.attachNetStream(ns);
 			
 			var netClient:Object = new Object();
 			netClient.onMetaData = function(meta:Object):void {
@@ -215,14 +260,14 @@ package game_impl
 			ns.play("http://www.helpexamples.com/flash/video/cuepoints.flv");
 			//ns.play("http://pocked-book-ar.eugene.dev.ok/movie.flv");
 			ns.togglePause();
-		}
+		}*/
 		
-		private function putNext(_val:Number):void {
+		/*private function putNext(_val:Number):void {
 			voiceVal[voiceVal.length - 1] = _val;
 			var _len:int = voiceVal.length-1;
 			for(var i:int = 0; i < _len; i++){
 				voiceVal[i] = voiceVal[i+1];
 			}
-		}
+		}*/
 	}
 }

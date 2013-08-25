@@ -1,6 +1,8 @@
 package game_impl
 {
-	import flash.display.*;
+	import flash.display.Bitmap;
+	import flash.display.Sprite;
+	import flash.events.Event;
 	
 	import mono_core.ButtonCore;
 	
@@ -24,6 +26,14 @@ package game_impl
 		private var lightClass		:Class;
 		private var light			:Bitmap = new lightClass();
 		
+		[Embed(source = '../../assets/screen_1/pk-lightOff.png')]
+		private var pkClass1			:Class;
+		private var pkOff				:Bitmap = new pkClass1();
+		
+		[Embed(source = '../../assets/screen_1/pocket-on.png')]
+		private var pkClass2			:Class;
+		private var pkOn				:Bitmap = new pkClass2();
+		
 		private var bt_1				:ButtonCore = new ButtonCore();
 		private var bt_2				:ButtonCore = new ButtonCore();
 		
@@ -35,10 +45,17 @@ package game_impl
 		
 		private var drawCavwas				:Sprite = new Sprite();
 		
+		private var isToNext			:Boolean = false;
+		
 		public function Screen_3() {
 			this.setStepsCount(0);
 			
 			container.addChild(bg);
+			
+			container.addChild(pkOff);
+			setPos(pkOff, 155, 30).setScale(pkOff, 1.5, 1.5);
+			container.addChild(pkOn);
+			setPos(pkOn, 155, 30).setScale(pkOn, 1.5, 1.5);
 			
 			bt_1.addBitmap(bt1).setPosition(25, 650).addEventListener("CLICK", clickPrev);
 			bt_2.addBitmap(bt2).setPosition(640, 650).addEventListener("CLICK", clickNext);
@@ -50,6 +67,18 @@ package game_impl
 			container.addChild(light);
 			light.x = 320;
 			light.y = 255;
+		}
+		
+		public override function clickNext(e:Event):void {
+			isToNext = true;
+		}
+		
+		public override function beforShow():void {
+			pkOn.alpha = 0;
+			
+			isToNext = false;
+			luminosityCount = 0;
+			firstDelay = 0;
 		}
 		
 		public override function loop():void {
@@ -68,16 +97,19 @@ package game_impl
 				luminosityCount = 0;
 			}
 			
-			drawCavwas.graphics.clear();
-			drawCavwas.graphics.beginFill(0xffffff, 0.2);
-			//drawCavwas.graphics.drawRect(10, 250, luminosityCount*(790/luminosityCountMax), 30);
-			drawCavwas.graphics.drawCircle(400, 350, luminosityCount*(390/luminosityCountMax));
-			drawCavwas.graphics.endFill();
+			//drawCavwas.graphics.clear();
+			//drawCavwas.graphics.beginFill(0xffffff, 0.2);
+			//drawCavwas.graphics.drawCircle(400, 350, luminosityCount*(390/luminosityCountMax));
+			//drawCavwas.graphics.endFill();
 			
 			if(luminosityCount > luminosityCountMax){
-				this.nextStep();
-				luminosityCount = 0;
-				firstDelay = 0;
+				isToNext = true;
+			}
+			
+			if(isToNext){
+				pkOn.alpha += 0.03;
+				if(pkOn.alpha > 2)
+					this.nextStep();
 			}
 		}
 	}

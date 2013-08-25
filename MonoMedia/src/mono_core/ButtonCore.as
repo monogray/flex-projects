@@ -41,7 +41,7 @@ package mono_core
 			return this;
 		}
 		
-		public function setPosition(_x:int, _y:int):ButtonCore {
+		public function setPosition(_x:Number, _y:Number):ButtonCore {
 			container.x = _x;
 			container.y = _y;
 			return this;

@@ -21,10 +21,11 @@ package screens
 		
 		public function ScreenCore(){
 			super();
-			container.addChild( getLabel() );
-			hideImmediately();
 			
 			TweenPlugin.activate([AutoAlphaPlugin]);
+			
+			container.addChild( getLabel() );
+			hideImmediately();
 		}
 		
 		public function getCurrentStep():int {
@@ -71,7 +72,7 @@ package screens
 			if(isVisible != false){
 				beforHide();
 				//TweenLite.to(container, 0.5, {x:-screenW, y:0, ease:Bounce.easeOut});
-				TweenLite.to(container, 0.5, {autoAlpha:0});
+				TweenLite.to(container, 1, {autoAlpha:0});
 				isVisible = false;
 			}
 		}
@@ -88,7 +89,7 @@ package screens
 				beforShow();
 				//container.x = screenW;
 				//TweenLite.to(container, 0.5, {x:0, y:0, ease:Bounce.easeOut});
-				TweenLite.to(container, 1.5, {autoAlpha:1});
+				TweenLite.to(container, 0.8, {autoAlpha:1});
 				isVisible = true;
 			}
 		}
