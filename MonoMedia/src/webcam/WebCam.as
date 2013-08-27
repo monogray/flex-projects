@@ -40,6 +40,8 @@ package webcam
 		private var micActivity			:Number = 0;
 		
 		private var sendLoader			:URLLoader = new URLLoader();
+		private var sendHeader			:URLRequestHeader = new URLRequestHeader("Content-type", "application/octet-stream");
+		
 		
 		public function WebCam() {
 		}
@@ -90,7 +92,6 @@ package webcam
 		public function sendImageToUrl(_url:String):void {
 			imgBA = jpgEncoder.encode(capture.bitmapData);
 			
-			var sendHeader:URLRequestHeader = new URLRequestHeader("Content-type", "application/octet-stream");		// Вынести!!!!!!!!!!!!
 			var sendReq:URLRequest = new URLRequest(_url);
 			sendReq.requestHeaders.push(sendHeader);
 			sendReq.method = URLRequestMethod.POST;
@@ -110,7 +111,7 @@ package webcam
 		}
 		
 		public function setupMicrophone():void {
-			mic = Microphone.getMicrophone(camId);
+			mic = Microphone.getMicrophone();//camId+1);
 			setupMicrophoneSettings(70, 44, true, false, 10, -1);
 			
 			mic.addEventListener(StatusEvent.STATUS, onMicStatus);

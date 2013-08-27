@@ -29,7 +29,7 @@ package
 		private var convertationCaunter		:int = 0;
 		private var convertationCaunterMax	:int = 100 + Math.random()*250;
 		
-		private var url				:String = "http://sand.test.irst-ukraine.com.ua/";
+		private var url				:String = "http://pocketbook-app.in.ua/ar-app/";
 		public function WebCamProcessing() {
 			//if(stage) init();
 			//else addEventListener(Event.ADDED_TO_STAGE, init);

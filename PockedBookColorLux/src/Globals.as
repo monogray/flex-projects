@@ -4,6 +4,8 @@ package
 
 	public class Globals
 	{
+		public static var url				:String = "http://pocketbook-app.in.ua/ar-app/";
+		
 		public static var webcam			:WebCamProcessing;
 		public static var colorWorks		:ColorWorks;
 		

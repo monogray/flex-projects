@@ -2,12 +2,13 @@ package game_impl
 {
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
-	import flash.events.*;
+	import flash.events.Event;
+	import flash.net.URLRequest;
+	import flash.net.navigateToURL;
 	
 	import mono_core.ButtonCore;
 	
 	import screens.ScreenCore;
-	import flash.net.*;
 	
 	public class Screen_5 extends ScreenCore
 	{
@@ -54,8 +55,7 @@ package game_impl
 			}catch (error:Error){
 				trace("Unable to load URL");
 			}*/
-			
-			var url:URLRequest = new URLRequest("http://sand.test.irst-ukraine.com.ua/ar-app/index.php?mod=publish&id="+Globals.webcam.id);
+			var url:URLRequest = new URLRequest(Globals.url+ "index.php?mod=publish&id="+Globals.webcam.id);
 			navigateToURL(url, "_self");
 		}
 		
